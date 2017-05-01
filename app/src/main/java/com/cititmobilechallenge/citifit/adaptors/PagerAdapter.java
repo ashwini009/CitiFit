@@ -51,7 +51,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        Fragment fragment = null;
+        Fragment fragment;
         switch (position) {
             case TASK_FRAGMENT:
                 fragment = TasksFragment.getInstance();

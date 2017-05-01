@@ -23,12 +23,13 @@ public class Constants {
 
     // Notification Related Constants
 
-    public static final String NOTIFICATION_MESSAGE = "NOTIFICATION_MESSAGE";
-    public static final String NOTIFICATION_TASK = "NOTIFICATION_TASK";
-    public static final String NOTIFICATION_GOAL_UNIT = "NOTIFICATION_GOAL_UNIT";
-    public static final String NOTIFICATION_GOAL_VALUE = "NOTIFICATION_GOAL_VALUE";
-    public static final String NOTIFICATION_POINTS = "NOTIFICATION_POINTS";
-    public static final String NOTIFICATION_TITLE = "NOTIFICATION_TITLE";
-    public static final String NOTIFICATION_MESSAGE_TYPE = "NOTIFICATION_MESSAGE_TYPE";
+    public static final String NOTIFICATION_MESSAGE = "message";
+    public static final String NOTIFICATION_TASK = "task";
+    public static final String NOTIFICATION_GOAL_UNIT = "goal_unit";
+    public static final String NOTIFICATION_GOAL_VALUE = "goal_value";
+    public static final String NOTIFICATION_POINTS = "points";
+    public static final String NOTIFICATION_TITLE = "title";
+    public static final String NOTIFICATION_MESSAGE_TYPE = "data_type";
+    public static final String PROVIDER = "provider";
 }
 

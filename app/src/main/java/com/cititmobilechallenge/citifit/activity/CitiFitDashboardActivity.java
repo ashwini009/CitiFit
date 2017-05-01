@@ -71,7 +71,7 @@ public class CitiFitDashboardActivity extends AppCompatActivity implements Succe
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
-        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
@@ -93,7 +93,7 @@ public class CitiFitDashboardActivity extends AppCompatActivity implements Succe
     }
 
     private void showSuccessDialog(String messsage_type) {
-        if (messsage_type != null && messsage_type.equalsIgnoreCase("Message")) {
+        if (messsage_type != null && messsage_type.equalsIgnoreCase("message")) {
             mSuccessDialogFragment = new SuccessDialogFragment();
 
             mSuccessDialogFragment.show(getFragmentManager(), "SUCCESS_DIALOG_FRAGMENT");

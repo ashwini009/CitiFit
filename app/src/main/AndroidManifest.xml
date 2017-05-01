@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cititmobilechallenge.citifit">
+          package="com.cititmobilechallenge.citifit">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
-    <!--
-      IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
-      to match your app's package name + ".permission.C2D_MESSAGE".
-    -->
-    <permission
-        android:name="com.cititmobilechallenge.citifit.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <uses-permission android:name="com.cititmobilechallenge.citifit.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 
     <application
         android:name=".application.CitiFitApplication"
@@ -32,9 +23,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
@@ -42,40 +33,30 @@
             android:configChanges="orientation"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".activity.CitiFitDashboardActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_dashboard"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.RewardActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_dashboard"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
-        <service android:name="com.parse.PushService" />
-
-        <receiver
-            android:name=".receiver.CustomPushReceiver"
-            android:exported="false">
+        <service
+            android:name=".fcm.FcmInstanceIdService">
             <intent-filter>
-                <action android:name="com.parse.push.intent.RECEIVE" />
-                <action android:name="com.parse.push.intent.DELETE" />
-                <action android:name="com.parse.push.intent.OPEN" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+        </service>
+        <service
+            android:name=".fcm.FcmMessagingService">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
-                <category android:name="com.cititmobilechallenge.citifit" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
-        </receiver>
+        </service>
 
         <activity
             android:name=".activity.ChosenGoalActivity"

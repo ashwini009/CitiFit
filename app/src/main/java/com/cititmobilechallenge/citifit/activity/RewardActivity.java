@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.cititmobilechallenge.citifit.R;
@@ -14,49 +16,54 @@ import com.cititmobilechallenge.citifit.common.FontHelper;
 import com.cititmobilechallenge.citifit.common.Utils;
 import com.cititmobilechallenge.citifit.modal.RewardHolder;
 
-import org.lucasr.twowayview.widget.TwoWayView;
-
 import java.util.ArrayList;
 
 /**
  * Created by ashwiask on 10/25/2015.
  */
 
-public class RewardActivity extends AppCompatActivity implements RewardListViewAdaptor.RewardListItemClickListener {
+public class RewardActivity extends AppCompatActivity implements RewardListViewAdaptor.RewardListItemClickListener
+{
 
-    private TwoWayView mRewardListView = null;
+    private RecyclerView mRewardListView = null;
 
     private RewardListViewAdaptor adaptor = null;
 
     private ArrayList<RewardHolder> mRewardList = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_reward);
 
         FontHelper.applyFont(this, findViewById(R.id.rl_reward_container));
 
-        mRewardListView = (TwoWayView) findViewById(R.id.rewardListView);
+        mRewardListView = (RecyclerView) findViewById(R.id.reward_list);
 
         initList();
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        layoutManager.setAutoMeasureEnabled(true);
+        mRewardListView.setLayoutManager(layoutManager);
+        mRewardListView.setHasFixedSize(true);
         adaptor = new RewardListViewAdaptor(mRewardList, this, this);
-
         mRewardListView.setAdapter(adaptor);
-
-
     }
 
-    public void onSkip(View view) {
-        if (view.getId() == R.id.btnSkip) {
+    public void onSkip(View view)
+    {
+        if (view.getId() == R.id.btnSkip)
+        {
             Intent intent = new Intent(this, CitiFitDashboardActivity.class);
             startActivity(intent);
         }
     }
 
-    private void initList() {
+    private void initList()
+    {
         mRewardList = new ArrayList<>(5);
         //TODO - Fetch the data dynamically using Async Task, once the API is ready
 
@@ -98,7 +105,8 @@ public class RewardActivity extends AppCompatActivity implements RewardListViewA
 
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(int position)
+    {
         Intent intent = new Intent(this, ChosenGoalActivity.class);
 
         RewardHolder reward = mRewardList.get(position);

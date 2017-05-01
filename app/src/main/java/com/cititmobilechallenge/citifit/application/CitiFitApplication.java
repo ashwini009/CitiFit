@@ -1,8 +1,8 @@
 package com.cititmobilechallenge.citifit.application;
 
 import android.app.Application;
+import android.content.Context;
 
-import com.cititmobilechallenge.citifit.helper.ParseUtils;
 import com.cititmobilechallenge.citifit.logger.Log;
 import com.cititmobilechallenge.citifit.logger.LogWrapper;
 import com.cititmobilechallenge.citifit.logger.MessageOnlyLogFilter;
@@ -10,13 +10,20 @@ import com.cititmobilechallenge.citifit.logger.MessageOnlyLogFilter;
 /**
  * Created by Mayank on 23-10-2015.
  */
-public class CitiFitApplication extends Application {
+public class CitiFitApplication extends Application
+{
+    private static Context context;
+
+    public static Context getContext()
+    {
+        return context;
+    }
+
     @Override
-    public void onCreate() {
+    public void onCreate()
+    {
         super.onCreate();
-        /*Parse.initialize(this, "3kVzn5ywKHuEzmrmhrbpAVZK7Qj39qHbaermdroW", "ngrluVLztOHAXHeqhcFJwJeiiRltpUuMxtB4KJat");
-        ParseInstallation.getCurrentInstallation().saveInBackground();*/
-        ParseUtils.registerParse(this);
+        context = this;
         initializeLogging();
     }
 
@@ -24,7 +31,8 @@ public class CitiFitApplication extends Application {
      * Initialize a custom log class that outputs both to in-app targets and logcat.
      */
 
-    private void initializeLogging() {
+    private void initializeLogging()
+    {
         // Wraps Android's native log framework.
         LogWrapper logWrapper = new LogWrapper();
         // Using Log, front-end to the logging chain, emulates android.util.log method signatures.

@@ -48,9 +48,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
-public class GoalsFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class GoalsFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
+{
 
     private static final String TAG = GoalsFragment.class.getSimpleName();
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
 
     private WheelIndicatorView mWheelIndicatorView = null;
     private LineChart mChart = null;
@@ -87,18 +89,21 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
 
     // TODO - UIs to be populated dynamically, once APIs are made
 
-    public static GoalsFragment getInstance() {
+    public static GoalsFragment getInstance()
+    {
 
         return new GoalsFragment();
     }
 
 
-    public GoalsFragment() {
+    public GoalsFragment()
+    {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
@@ -119,7 +124,8 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_goals, container, false);
@@ -158,7 +164,8 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
     }
 
 
-    private void initView(View view) {
+    private void initView(View view)
+    {
 
         mWheelIndicatorView = (WheelIndicatorView) view.findViewById(R.id.wheel_indicator_view);
 
@@ -171,9 +178,11 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
         tvGoalName = (TextView) view.findViewById(R.id.text_reward_name);
     }
 
-    private Bitmap getGoalImageByGoalSelection() {
+    private Bitmap getGoalImageByGoalSelection()
+    {
         Bitmap image = null;
-        switch (mGoalSelectedPos) {
+        switch (mGoalSelectedPos)
+        {
             case Constants.GOAL_KINDLE:
                 image = Utils.decodeSampledBitmapFromResource(getResources(), R.drawable.product1, 100, 100);
                 break;
@@ -205,8 +214,10 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
         return image;
     }
 
-    private void setGoalView() {
-        if (mGoalPrice != null && !mGoalPrice.isEmpty()) {
+    private void setGoalView()
+    {
+        if (mGoalPrice != null && !mGoalPrice.isEmpty())
+        {
             tvGoalPrice.setText(mGoalPrice);
             tvGoalDaysLeft.setText(mGoalDaysLeft);
             tvGoalPoints.setText(mGoalPoints);
@@ -218,7 +229,8 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
         setUpWheelView();
     }
 
-    private void setUpWheelView() {
+    private void setUpWheelView()
+    {
         //TODO - The percentage to be calculated based on data being processed and fetched dynamically
         // dummy data for kindle
         float totalPointsTarget = 7719; // Points target
@@ -235,9 +247,11 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
-        if (mClient != null && !mClient.isConnected()) {
+        if (mClient != null && !mClient.isConnected())
+        {
             Log.i(TAG, "Connecting client...");
             mClient.connect();
         }
@@ -245,16 +259,19 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
 
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
-        if (mClient != null && !mClient.isConnected()) {
+        if (mClient != null && !mClient.isConnected())
+        {
             setDummyData();
         }
     }
 
 
     // For dummy data
-    private void setDummyData() {
+    private void setDummyData()
+    {
 
         ArrayList<String> xVals = new ArrayList<String>();
 
@@ -270,7 +287,8 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
 
         ArrayList<Entry> yVals = new ArrayList<Entry>();
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 7; i++)
+        {
 
             float mult = (100 + 1);
             float val = (float) (Math.random() * mult) + 3;// + (float)
@@ -290,7 +308,8 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
         mChart.invalidate();
     }
 
-    private void setThemeForLineData(LineDataSet set) {
+    private void setThemeForLineData(LineDataSet set)
+    {
 
         int[] colors = {R.color.red, R.color.purple, R.color.purple, R.color.purple, R.color.purple, R.color.purple, R.color.red};
 
@@ -307,7 +326,8 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
     }
 
     @Override
-    public void onConnected(Bundle bundle) {
+    public void onConnected(Bundle bundle)
+    {
         Log.i(TAG, "Connected!!!");
         // Now you can make calls to the Fitness APIs.  What to do?
         // Look at some data!!
@@ -316,20 +336,25 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
 
 
     @Override
-    public void onConnectionSuspended(int i) {
+    public void onConnectionSuspended(int i)
+    {
         // If your connection to the sensor gets lost at some point,
         // you'll be able to determine the reason and react to it here.
-        if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST) {
+        if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST)
+        {
             Log.i(TAG, "Connection lost.  Cause: Network Lost.");
-        } else if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
+        } else if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED)
+        {
             Log.i(TAG, "Connection lost.  Reason: Service Disconnected");
         }
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult result) {
+    public void onConnectionFailed(ConnectionResult result)
+    {
         Log.i(TAG, "Connection failed. Cause: " + result.toString());
-        if (!result.hasResolution()) {
+        if (!result.hasResolution())
+        {
             // Show the localized error dialog
             GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(),
                     getActivity(), 0).show();
@@ -338,13 +363,16 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
         // The failure has a resolution. Resolve it.
         // Called typically when the app is not yet authorized, and an
         // authorization dialog is displayed to the user.
-        if (!isAuthInProgress) {
-            try {
+        if (!isAuthInProgress)
+        {
+            try
+            {
                 Log.i(TAG, "Attempting to resolve failed connection");
                 isAuthInProgress = true;
                 result.startResolutionForResult(getActivity(),
                         REQUEST_OAUTH);
-            } catch (IntentSender.SendIntentException e) {
+            } catch (IntentSender.SendIntentException e)
+            {
                 Log.e(TAG,
                         "Exception while starting resolution activity", e);
             }
@@ -352,13 +380,17 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_OAUTH) {
+        if (requestCode == REQUEST_OAUTH)
+        {
             isAuthInProgress = false;
-            if (resultCode == 1) {
+            if (resultCode == 1)
+            {
                 // Make sure the app is not already connected or attempting to connect
-                if (!mClient.isConnecting() && !mClient.isConnected()) {
+                if (!mClient.isConnecting() && !mClient.isConnected())
+                {
                     mClient.connect();
                 }
             }
@@ -374,9 +406,11 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
      * An example of an asynchronous call using a callback can be found in the example
      * on deleting data below.
      */
-    private class GoogleFitDataFetcherTask extends AsyncTask<Void, Void, DataReadResult> {
+    private class GoogleFitDataFetcherTask extends AsyncTask<Void, Void, DataReadResult>
+    {
 
-        protected DataReadResult doInBackground(Void... params) {
+        protected DataReadResult doInBackground(Void... params)
+        {
             Log.i(TAG, "Processing Google Fit Data");
 
             // Begin by creating the query.
@@ -389,12 +423,14 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
         }
 
         @Override
-        protected void onPostExecute(DataReadResult result) {
+        protected void onPostExecute(DataReadResult result)
+        {
             super.onPostExecute(result);
 
             processDataReadResult(result);
 
-            if (mYVals != null && mYVals.size() > 0) {
+            if (mYVals != null && mYVals.size() > 0)
+            {
                 LineDataSet weeklyData = new LineDataSet(mYVals, "Weekly Data");
 
                 setThemeForLineData(weeklyData);
@@ -414,7 +450,8 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
     /**
      * Return a {@link DataReadRequest} for all step count changes in the past week.
      */
-    private DataReadRequest queryFitnessData() {
+    private DataReadRequest queryFitnessData()
+    {
         // [START build_read_data_request]
         // Setting a start and end date using a range of 1 week before this moment.
         Calendar cal = Calendar.getInstance();
@@ -435,9 +472,9 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
                 // datapoints each consisting of a few steps and a timestamp.  The more likely
                 // scenario is wanting to see how many steps were walked per day, for 7 days.
                 .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
-                        // Analogous to a "Group By" in SQL, defines how data should be aggregated.
-                        // bucketByTime allows for a time span, whereas bucketBySession would allow
-                        // bucketing by "sessions", which would need to be defined in code.
+                // Analogous to a "Group By" in SQL, defines how data should be aggregated.
+                // bucketByTime allows for a time span, whereas bucketBySession would allow
+                // bucketing by "sessions", which would need to be defined in code.
                 .bucketByTime(1, TimeUnit.DAYS)
                 .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
                 .build();
@@ -446,31 +483,29 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
         return readRequest;
     }
 
-    /**
-     * Log a record of the query result. It's possible to get more constrained data sets by
-     * specifying a data source or data type, but for demonstrative purposes here's how one would
-     * dump all the data. In this sample, logging also prints to the device screen, so we can see
-     * what the query returns, but your app should not log fitness information as a privacy
-     * consideration. A better option would be to dump the data you receive to a local data
-     * directory to avoid exposing it to other applications.
-     */
-    private void processDataReadResult(DataReadResult dataReadResult) {
+    private void processDataReadResult(DataReadResult dataReadResult)
+    {
         // [START parse_read_data_result]
         // If the DataReadRequest object specified aggregated data, dataReadResult will be returned
         // as buckets containing DataSets, instead of just DataSets.
-        if (dataReadResult.getBuckets().size() > 0) {
+        if (dataReadResult.getBuckets().size() > 0)
+        {
             Log.i(TAG, "Number of returned buckets of DataSets is: "
                     + dataReadResult.getBuckets().size());
-            for (Bucket bucket : dataReadResult.getBuckets()) {
+            for (Bucket bucket : dataReadResult.getBuckets())
+            {
                 List<DataSet> dataSets = bucket.getDataSets();
-                for (DataSet dataSet : dataSets) {
+                for (DataSet dataSet : dataSets)
+                {
                     populateStepsValues(dataSet);
                 }
             }
-        } else if (dataReadResult.getDataSets().size() > 0) {
+        } else if (dataReadResult.getDataSets().size() > 0)
+        {
             Log.i(TAG, "Number of returned DataSets is: "
                     + dataReadResult.getDataSets().size());
-            for (DataSet dataSet : dataReadResult.getDataSets()) {
+            for (DataSet dataSet : dataReadResult.getDataSets())
+            {
                 populateStepsValues(dataSet);
             }
         }
@@ -478,11 +513,13 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
     }
 
     // [START parse_dataset]
-    private void populateStepsValues(DataSet dataSet) {
+    private void populateStepsValues(DataSet dataSet)
+    {
         Log.i(TAG, "Data returned for Data type: " + dataSet.getDataType().getName());
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
-        for (DataPoint dp : dataSet.getDataPoints()) {
+        for (DataPoint dp : dataSet.getDataPoints())
+        {
 
             Log.i(TAG, "Data point:");
             Log.i(TAG, "\tType: " + dp.getDataType().getName());
@@ -490,17 +527,20 @@ public class GoalsFragment extends Fragment implements GoogleApiClient.Connectio
             Log.i(TAG, "\tEnd: " + dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS)));
 
             // Resets the counter
-            if (mCounter > 7) {
+            if (mCounter > 7)
+            {
                 mCounter = 0;
             }
-            for (Field field : dp.getDataType().getFields()) {
+            for (Field field : dp.getDataType().getFields())
+            {
 
                 String steps = dp.getValue(field).toString();
                 Log.i(TAG, "\tField: " + field.getName() +
                         " Value: " + steps);
 
                 //Generating the entries for the Y axis of chart
-                if (field.getName().equalsIgnoreCase("steps")) {
+                if (field.getName().equalsIgnoreCase("steps"))
+                {
                     mYVals.add(new Entry(Integer.parseInt(steps), mCounter));
                 }
                 mCounter++;

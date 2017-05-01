@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "410648479819",
+    "firebase_url": "https://citifitapp.firebaseio.com",
+    "project_id": "citifitapp",
+    "storage_bucket": "citifitapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410648479819:android:fdc650ca41ed4625",
+        "android_client_info": {
+          "package_name": "com.cititmobilechallenge.citifit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410648479819-optt97vui4keb3aujtk1jn63apop2kr3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cititmobilechallenge.citifit",
+            "certificate_hash": "92a206d4872e9e721356e0ad9467ebfe8cefcb0d"
+          }
+        },
+        {
+          "client_id": "410648479819-cpmceojir47jkfrdujqcv9u4f3k3j834.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4rsc8OV1hRE6v_NxiBz59r2aFwqJ18cI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410648479819-cpmceojir47jkfrdujqcv9u4f3k3j834.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

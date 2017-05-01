@@ -10,66 +10,52 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 
 import com.cititmobilechallenge.citifit.R;
+import com.cititmobilechallenge.citifit.activity.CitiFitDashboardActivity;
 import com.cititmobilechallenge.citifit.application.AppConfig;
+import com.cititmobilechallenge.citifit.application.CitiFitApplication;
 import com.cititmobilechallenge.citifit.common.Constants;
 
 import java.util.List;
 
-
-/**
- * Created by Mayank Jain
- */
-public class NotificationUtils {
-
-    private String TAG = NotificationUtils.class.getSimpleName();
-
-    private Context mContext;
-
-    public NotificationUtils() {
-    }
-
-    public NotificationUtils(Context mContext) {
-        this.mContext = mContext;
-    }
-
-    public void showNotificationMessage(Intent intent) {
-
-        String message = intent.getStringExtra(Constants.NOTIFICATION_MESSAGE);
-        String task = intent.getStringExtra(Constants.NOTIFICATION_TASK);
-        String points = intent.getStringExtra(Constants.NOTIFICATION_POINTS);
-        String goalUnit = intent.getStringExtra(Constants.NOTIFICATION_GOAL_UNIT);
-        String goalValue = intent.getStringExtra(Constants.NOTIFICATION_GOAL_VALUE);
-        String title = intent.getStringExtra(Constants.NOTIFICATION_TITLE);
-        String message_type = intent.getStringExtra(Constants.NOTIFICATION_MESSAGE_TYPE);
+public class NotificationUtils
+{
+    public static void showNotificationMessage(Bundle extras)
+    {
+        Context context = CitiFitApplication.getContext();
+        String message = extras.getString(Constants.NOTIFICATION_MESSAGE);
+        String task = extras.getString(Constants.NOTIFICATION_TASK);
+        String points = extras.getString(Constants.NOTIFICATION_POINTS);
+        String goalUnit = extras.getString(Constants.NOTIFICATION_GOAL_UNIT);
+        String goalValue = extras.getString(Constants.NOTIFICATION_GOAL_VALUE);
+        String title = extras.getString(Constants.NOTIFICATION_TITLE);
+        String dataType = extras.getString(Constants.NOTIFICATION_MESSAGE_TYPE);
 
         // Check for empty push message
         if (TextUtils.isEmpty(message))
             return;
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        int smallIcon = R.drawable.points_big;
-
+        Intent intent = new Intent(context, CitiFitDashboardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(Constants.NOTIFICATION_TASK, task);
         intent.putExtra(Constants.NOTIFICATION_GOAL_UNIT, goalUnit);
         intent.putExtra(Constants.NOTIFICATION_GOAL_VALUE, goalValue);
         intent.putExtra(Constants.NOTIFICATION_POINTS, points);
+        intent.putExtra(Constants.NOTIFICATION_MESSAGE_TYPE, dataType);
 
-        if (message_type.equalsIgnoreCase("Data")) {
-            smallIcon = getTaskIconByType(task);
-        }
+        int smallIcon = getTaskIconByType(task);
+
         // notification icon
         int icon = R.mipmap.ic_launcher;
 
         int mNotificationId = AppConfig.NOTIFICATION_ID;
 
         PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
                         | PendingIntent.FLAG_ONE_SHOT);
 
         // shows a big content text notification
@@ -77,23 +63,25 @@ public class NotificationUtils {
         bigTextStyle.setBigContentTitle(title);
         bigTextStyle.bigText(message);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         Notification notification = builder.setSmallIcon(smallIcon).setTicker(title).setWhen(0)
                 .setAutoCancel(true)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultPendingIntent)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon)).setStyle(bigTextStyle).build();
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), icon)).setStyle(bigTextStyle).build();
 
-        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(mNotificationId, notification);
 
     }
 
-    private int getTaskIconByType(String type) {
+    private static int getTaskIconByType(String type)
+    {
         int taskIconId = R.drawable.run_icon;
-        switch (type) {
+        switch (type)
+        {
             case "Run":
                 taskIconId = R.drawable.run_icon;
                 break;
@@ -116,24 +104,32 @@ public class NotificationUtils {
      * @param context
      * @return
      */
-    public static boolean isAppIsInBackground(Context context) {
+    public static boolean isAppIsInBackground(Context context)
+    {
         boolean isInBackground = true;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH)
+        {
             List<ActivityManager.RunningAppProcessInfo> runningProcesses = am.getRunningAppProcesses();
-            for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
-                if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                    for (String activeProcess : processInfo.pkgList) {
-                        if (activeProcess.equals(context.getPackageName())) {
+            for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses)
+            {
+                if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND)
+                {
+                    for (String activeProcess : processInfo.pkgList)
+                    {
+                        if (activeProcess.equals(context.getPackageName()))
+                        {
                             isInBackground = false;
                         }
                     }
                 }
             }
-        } else {
+        } else
+        {
             List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
             ComponentName componentInfo = taskInfo.get(0).topActivity;
-            if (componentInfo.getPackageName().equals(context.getPackageName())) {
+            if (componentInfo.getPackageName().equals(context.getPackageName()))
+            {
                 isInBackground = false;
             }
         }
