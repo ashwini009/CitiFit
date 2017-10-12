@@ -3,8 +3,7 @@ apply plugin: 'com.android.application'
 ext {
     packageName = "com.cititmobilechallenge.citifit"
     supportLibVersion = '25.3.1'
-    gmsVersion = '10.2.4'
-    playServicesVersion = "10.2.4"
+    gmsVersion = '11.4.2'
 }
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -62,17 +61,13 @@ android {
     }
 }
 
-repositories {
-    maven { url "https://jitpack.io" }
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:multidex:1.0.1"
-    compile "com.google.android.gms:play-services-fitness:${playServicesVersion}"
+    compile "com.google.android.gms:play-services-fitness:${gmsVersion}"
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.5'
-    compile "com.google.android.gms:play-services-auth:${playServicesVersion}"
+    compile "com.google.android.gms:play-services-auth:${gmsVersion}"
     compile "com.android.support:design:${supportLibVersion}"
     compile "com.android.support:cardview-v7:${supportLibVersion}"
     compile "com.android.support:recyclerview-v7:${supportLibVersion}"
