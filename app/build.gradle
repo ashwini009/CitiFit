@@ -73,6 +73,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${supportLibVersion}"
     compile "com.google.firebase:firebase-messaging:${gmsVersion}"
     compile 'com.dlazaro66.wheelindicatorview:WheelIndicatorView:1.0.0'
+    compile "com.google.firebase:firebase-config:${gmsVersion}"
 }
 
 apply plugin: 'com.google.gms.google-services'
