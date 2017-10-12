@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 ext {
     packageName = "com.cititmobilechallenge.citifit"
-    supportLibVersion = '25.3.1'
+    supportLibVersion = '26.1.0'
     gmsVersion = '11.4.2'
 }
 
@@ -20,14 +20,14 @@ android {
         }
     }
 
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "${packageName}"
         minSdkVersion 16
         versionCode 1
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionName "1.0"
         multiDexEnabled true
     }
